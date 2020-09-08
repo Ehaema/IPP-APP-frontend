@@ -24,6 +24,8 @@ export var Map = (function () {
         render() {
             const centerLL = toEPSG4326([13519023.565173406, 3636438.266781322])
 
+            this.garageLayer = React.createElement(Garage, {parent: this})
+
             return (
                 <MapView
                     style={styles.map}
@@ -33,9 +35,7 @@ export var Map = (function () {
                     }}
                     zoomLevel={17.99281959015753}
                 >
-                    <Garage
-                        parent={this}
-                    />
+                    {this.garageLayer}
                 </MapView>
             );
         }

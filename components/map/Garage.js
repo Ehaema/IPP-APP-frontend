@@ -54,7 +54,7 @@ export var Garage = (function () {
                         }}
                         title={this.state.garage[i].description}
                         onPress={(e) => {
-                            console.log(e);
+                            console.log(this.state.garage[i]);
                         }}
                         key={i}
                     />
