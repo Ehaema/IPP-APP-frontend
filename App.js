@@ -7,17 +7,19 @@
  */
 
 import React from "react";
-import {SafeAreaView, StyleSheet, ScrollView, StatusBar, Text} from "react-native";
+import {SafeAreaView, StyleSheet, StatusBar} from "react-native"
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider, Layout, Text } from '@ui-kitten/components';
 
 import Main from "./components/Main";
 
 
 const App: () => React$Node = () => {
   return (
-    <>
+    <ApplicationProvider {...eva} theme={eva.light}>
       <StatusBar barStyle="dark-content" />
       <Main/>
-    </>
+    </ApplicationProvider>
   );
 };
 
