@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {StyleSheet, View, Modal} from "react-native"
+import {StyleSheet, View, Modal, Alert} from "react-native"
 import {Layout, Text, Divider, Button, Input, Card, CheckBox} from '@ui-kitten/components';
 
 
@@ -11,7 +11,9 @@ export var Auth = (function () {
             this.state = {
                 username: "",
                 password: "",
-                remember: false
+                remember: false,
+                login: false,
+                newModel: null
             }
         }
 
@@ -23,8 +25,70 @@ export var Auth = (function () {
             this.mounted = false;
         }
 
-        render() {
+        checkLogin() {
+            if (this.state.username === "r") {
+                this.setState({login : true});
+                return this.receiver();
+            }
+            else if (this.state.username === "s") {
+                this.setState({login : true});
+                return this.sender();
+            }
+            else return Alert.alert('登录失败！');
+        }
+
+        receiver() {
             return (
+                <Layout
+                    style={styles.userWindow}
+                    level="1">
+                    <Card
+                        header={
+                            () => <Text
+                                category='h3'
+                                style={styles.title}>
+                                收件者
+                            </Text>}
+                        footer={
+                            () => <Layout
+                                style={styles.formRow}>
+                                <Button onPress={() => this.checkLogin() }>
+                                    登录
+                                </Button>
+                            </Layout>}
+                        style={styles.card}>
+                    </Card>
+                </Layout>
+            );
+        }
+
+        sender() {
+            return (
+                <Layout
+                    style={styles.userWindow}
+                    level="1">
+                    <Card
+                        header={
+                            () => <Text
+                                category='h3'
+                                style={styles.title}>
+                                寄件者
+                            </Text>}
+                        footer={
+                            () => <Layout
+                                style={styles.formRow}>
+                                <Button onPress={() => this.checkLogin() }>
+                                    登录
+                                </Button>
+                            </Layout>}
+                        style={styles.card}>
+                    </Card>
+                </Layout>
+            );
+        }
+
+        render() {
+            return ( !this.state.login?
                 <Modal
                     visible={true}>
                     <Layout
@@ -40,7 +104,9 @@ export var Auth = (function () {
                             footer={
                                 () => <Layout
                                     style={styles.formRow}>
-                                    <Button>登录</Button>
+                                    <Button onPress={() => this.setState({newModel: this.checkLogin()})}>
+                                        登录
+                                    </Button>
                                 </Layout>}
                             style={styles.card}>
                             <Layout
@@ -49,19 +115,24 @@ export var Auth = (function () {
                                     label={
                                         <Text category="label">
                                             用户名
-                                        </Text>}
-                                        value={this.state.username}
-                                        onChange={(next) => this.setState({username: next})}/>
+                                        </Text>
+                                    }
+                                    value={this.state.username}
+                                    onChangeText={(text) => this.setState({username: text})}
+                                />
                             </Layout>
                             <Layout
                                 style={styles.formRow}>
                                 <Input
                                     secureTextEntry={true}
-                                    label={<Text category="label">
-                                        密码
-                                    </Text>}
+                                    label={
+                                        <Text category="label">
+                                            密码
+                                        </Text>
+                                    }
                                     value={this.state.password}
-                                    onChange={(next) => this.setState({password: next})}/>
+                                    onChangeText={(text) => this.setState({password: text})}
+                                />
                             </Layout>
                             <Layout
                                 style={styles.formRow}>
@@ -74,7 +145,7 @@ export var Auth = (function () {
                             </Layout>
                         </Card>
                     </Layout>
-                </Modal>
+                </Modal> : this.state.newModel
             );
         }
     }
@@ -96,6 +167,10 @@ const styles = StyleSheet.create({
     formRow: {
         paddingTop: 10,
         paddingBottom: 10
+    },
+    userWindow: {
+        height: "40%",
+        top: "60%",
     }
 })
 

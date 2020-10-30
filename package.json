@@ -10,8 +10,10 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@eva-design/eva": "^2.0.0",
     "react": "16.13.1",
     "react-native": "0.63.2",
+    "react-native-ui-kitten": "^4.4.1",
     "react-native-webview": "latest"
   },
   "devDependencies": {
